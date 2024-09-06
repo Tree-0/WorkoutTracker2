@@ -16,22 +16,38 @@ namespace WorkoutTracker2.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // SQLite is db provider, with db name 'workout'
             optionsBuilder.UseSqlite("Data Source=workout.db");
         }
 
+
+        /// <summary>
+        /// Specifying important aspects of the database structure
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Fluent API configurations
+            // Table names
             modelBuilder.Entity<Workout>()
-                .HasMany(w => w.Exercises)
-                .WithOne(e => e.Workout)
-                .HasForeignKey(e => e.WorkoutId);
+                .ToTable("Workouts");
             modelBuilder.Entity<Exercise>()
-                .HasMany(e => e.SetData)
-                .WithOne(rw => rw.Exercise)
-                .HasForeignKey(rw => rw.ExerciseId);
+                .ToTable("Exercises");
+            modelBuilder.Entity<RepWeight>()
+                .ToTable("RepWeights");
+
+            // Table relationships
+            modelBuilder.Entity<Workout>()
+                .HasMany(w => w.Exercises) // one-to-many
+                .WithOne(e => e.Workout) // one-to-one
+                .HasForeignKey(e => e.WorkoutId); // foreign key
+
+            modelBuilder.Entity<Exercise>()
+                .HasMany(e => e.SetData) // one-to-many
+                .WithOne(rw => rw.Exercise) // one-to-one
+                .HasForeignKey(rw => rw.ExerciseId); // foreign key
 
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

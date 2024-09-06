@@ -24,5 +24,10 @@ namespace WorkoutTracker2
         {
             InitializeComponent();
         }
+
+        private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+
+        }
     }
 }

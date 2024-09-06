@@ -54,18 +54,38 @@
         
         
         <!-- Data Entry -->
-        <DataGrid Grid.Column="2" Grid.Row="0">
+        <DataGrid Grid.Column="2" Grid.Row="0" CanUserAddRows="True" CanUserDeleteRows="True"
+                  AddingNewItem="DataGrid_AddingNewItem">
             <DataGrid.Columns>
                 <DataGridTextColumn/>
                 <DataGridTextColumn/>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <!-- Buttons for dealing with Data Entry -->
+        <Grid Grid.Column="2" Grid.Row="1">
 
-        <StackPanel Grid.Column="2" Grid.Row="1">
-            <Button Content="1"/>
-            <Button Content="2"/>
-            <Button Content="3"/>
-        </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <!-- Checkbox for barbell vs. dumbell weight entry 
+            (Barbell will multiply displayed value by 2) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <CheckBox x:Name="IsWeightPerLimbCheckBox" VerticalAlignment="Center"/>
+                <Label HorizontalAlignment="Stretch" Content="Dumbbells (weight is per limb)"/>
+            </StackPanel>
+            
+            <Button Content="Add Exercise"/>
+            <Button Content="Submit Workout"/>
+        </Grid>
         
 
 
