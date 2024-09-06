@@ -1,0 +1,28 @@
+﻿<Window x:Class="WorkoutTracker2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkoutTracker2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <TabControl x:Name="NavigationTab" TabStripPlacement="Top" >
+            <TabItem x:Name="HomeTab" Header="Home">
+                <local:HomeControl/>
+            </TabItem>
+
+            <TabItem x:Name="DataEntryTab" Header="Data">
+                <local:DataEntryControl/>
+            </TabItem>
+
+            <TabItem x:Name="GraphingTab" Header="Graph">
+                <local:GraphingControl/>
+            </TabItem>
+
+            <TabItem x:Name="CalculationTab" Header="Calculate">
+                <local:CalculationsControl/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
