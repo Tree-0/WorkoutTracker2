@@ -16,8 +16,9 @@ namespace WorkoutTracker2.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // SQLite is db provider, with db name 'workout'
-            optionsBuilder.UseSqlite("Data Source=workout.db");
+            // SQLite is db provider
+            // TODO: Make path relative instead of absolute while not getting errors for it
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\Natha\\OneDrive\\Desktop\\SQLite\\WorkoutTracker2.db");
         }
 
 

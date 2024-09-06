@@ -15,5 +15,10 @@ namespace WorkoutTracker2.Model
         public int Reps { get; set; } // repetitions
         public float Weight { get; set; } // weight used
 
+
+        public override string ToString()
+        {
+            return $"{Weight} x {Reps}";
+        }
     }
 }

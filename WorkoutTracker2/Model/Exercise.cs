@@ -16,6 +16,7 @@ namespace WorkoutTracker2.Model
         public int NumSets => SetData.Count;
         public string Name { get; set; }
         public bool IsWeightPerLimb { get; set; }
+        public bool IsBodyWeight { get; set; }
         public List<RepWeight> SetData { get; set; } // navigation to children (set info)
 
 
@@ -23,6 +24,22 @@ namespace WorkoutTracker2.Model
         public Exercise()
         {
             SetData = new List<RepWeight>();
+        }
+
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"{Name} - " +
+                $"\nweight per limb: {IsWeightPerLimb}" +
+                $"\nBW?: {IsBodyWeight}\n");
+
+            foreach (var repWeight in SetData)
+            {
+                sb.Append(repWeight.ToString() + "\n");
+            }
+
+            return sb.ToString();
         }
 
 

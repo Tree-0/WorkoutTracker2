@@ -14,6 +14,7 @@ namespace WorkoutTracker2.Model
         public string Description { get; set; }
 
         public List<Exercise> Exercises { get; set; } // navigation to exercise children
+        public int numExercises => Exercises.Count;
 
 
         // Default
@@ -22,15 +23,16 @@ namespace WorkoutTracker2.Model
             Exercises = new List<Exercise>();
         }
 
-
-        public Workout(DateTime date, string label, string description, List<Exercise> exercises, int workoutId)
+        public override string ToString()
         {
-            this.Date = date;
-            this.Label = label;
-            this.Description = description;
-            this.Exercises = exercises;
-            this.WorkoutId = workoutId;
+            StringBuilder sb = new StringBuilder($"{Label}\n");
+            sb.Append($"Description:\n{Description}\n");
+
+            foreach( var exercise in Exercises )
+                { sb.Append( exercise.ToString() ); }
+
+            return sb.ToString();
         }
-        
+
     }
 }

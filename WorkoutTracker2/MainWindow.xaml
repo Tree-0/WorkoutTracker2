@@ -5,23 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkoutTracker2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
     <Grid>
         <TabControl x:Name="NavigationTab" TabStripPlacement="Top" >
             <TabItem x:Name="HomeTab" Header="Home">
-                <local:HomeControl/>
+                <local:HomeControl x:Name="HomeControl"/>
             </TabItem>
 
             <TabItem x:Name="DataEntryTab" Header="Data">
-                <local:DataEntryControl/>
+                <local:DataEntryControl x:Name="DataEntryControl"/>
             </TabItem>
 
             <TabItem x:Name="GraphingTab" Header="Graph">
-                <local:GraphingControl/>
+                <local:GraphingControl x:Name="GraphingControl"/>
             </TabItem>
 
             <TabItem x:Name="CalculationTab" Header="Calculate">
-                <local:CalculationsControl/>
+                <local:CalculationsControl x:Name="CalculationsControl"/>
             </TabItem>
         </TabControl>
     </Grid>

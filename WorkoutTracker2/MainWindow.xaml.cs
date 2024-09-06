@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,40 +22,73 @@ namespace WorkoutTracker2
         {
             InitializeComponent();
 
-            Workout workout = new Workout();
-            workout.WorkoutId = 1;
-            workout.Label = "test";
-            workout.Date = DateTime.Now;
-            workout.Description = "test description";
+            // Setup anything that needs to be setup or saved when application is started and stopped
+            this.Loaded += new RoutedEventHandler(Window_Loaded);
+            this.Closing += new System.ComponentModel.CancelEventHandler(Window_Closing);
 
-            Exercise exercise_one = new Exercise();
-            exercise_one.ExerciseId = 1;
-            exercise_one.WorkoutId = 1;
-            exercise_one.Workout = workout;
-            
-            RepWeight repWeight_one = new RepWeight();
-            repWeight_one.RepWeightId = 1;
-            repWeight_one.Reps = 10;
-            repWeight_one.Weight = 100f;
-            repWeight_one.ExerciseId = 1;
-            repWeight_one.Exercise = exercise_one;
+            Workout workout = new Workout
+            {
+                Label = "test",
+                Date = DateTime.Now.Date,
+                Description = "test description"
+            };
 
-            RepWeight repWeight_two = new RepWeight();
-            repWeight_two.RepWeightId = 2;
-            repWeight_two.Reps = 20;
-            repWeight_two.Weight = 200f;
-            repWeight_two.ExerciseId = 1;
-            repWeight_two.Exercise = exercise_one;
+            Exercise exercise_one = new Exercise
+            {
+                Workout = workout,
+                Name = "Exercise 1",
+                IsBodyWeight = false
+            };
+
+            RepWeight repWeight_one = new RepWeight
+            {
+                Reps = 10,
+                Weight = 100f,
+                Exercise = exercise_one
+            };
+
+            RepWeight repWeight_two = new RepWeight
+            {
+                Reps = 20,
+                Weight = 200f,
+                Exercise = exercise_one
+            };
 
             workout.Exercises = new List<Exercise> { exercise_one };
             exercise_one.SetData = new List<RepWeight> { repWeight_one, repWeight_two };
 
-            using (var workoutContext = new WorkoutContext())
+            try
             {
-                workoutContext.Add(workout);
-                workoutContext.SaveChanges();
+                using (var workoutContext = new WorkoutContext())
+                {
+                    
+                    workoutContext.Workouts.Where(w => w.Date == workout.Date).ExecuteDelete();
+                    workoutContext.Add(workout);
+                    workoutContext.SaveChanges();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message ?? ex.Message);
             }
 
+        }
+
+
+        /// <summary>
+        /// Perform setup on window load and any saving/teardown needed on window close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, EventArgs e)
+        {
+            // save the items in the exercise selection comboBox to a JSON file
+            DataEntryControl.SaveComboBoxItems(DataEntryControl.ExerciseNameSelectionBox, "exerciseComboBox_items");
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // load the items from a JSON file to the exercise selection comboBox
+            DataEntryControl.LoadComboBoxItems(DataEntryControl.ExerciseNameSelectionBox, "exerciseComboBox_items");
         }
     }
 }
