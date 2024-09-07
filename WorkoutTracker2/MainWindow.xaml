@@ -9,7 +9,8 @@
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     <Grid>
-        <TabControl x:Name="NavigationTab" TabStripPlacement="Top" >
+        <TabControl x:Name="NavigationTab" TabStripPlacement="Top" 
+                    SelectedIndex="1">
             <TabItem x:Name="HomeTab" Header="Home">
                 <local:HomeControl x:Name="HomeControl"/>
             </TabItem>

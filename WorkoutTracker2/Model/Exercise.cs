@@ -31,8 +31,8 @@ namespace WorkoutTracker2.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"{Name} - " +
-                $"\nweight per limb: {IsWeightPerLimb}" +
-                $"\nBW?: {IsBodyWeight}\n");
+                $"\nWeight per Limb: {IsWeightPerLimb}" +
+                $"\nBodyweight: {IsBodyWeight}\n");
 
             foreach (var repWeight in SetData)
             {

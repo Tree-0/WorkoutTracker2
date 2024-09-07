@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace WorkoutTracker2.Model
 {
+    /// <summary>
+    /// This is the class used for Entity Framework, and represents a table in the database
+    /// 
+    /// Class representing one set of an exercise, with a number of reps, and the weight. 
+    /// </summary>
     internal class RepWeight
     {
         public int RepWeightId { get; set; } // primary key

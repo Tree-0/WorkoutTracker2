@@ -8,8 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="FloralWhite">
     <Grid>
-        <TextBlock Text="WORKOUT TRACKER 2" VerticalAlignment="Center" HorizontalAlignment="Center"
-                   FontSize="20"/>
+        <TextBlock Text="WORKOUT TRACKER 2" VerticalAlignment="Top" HorizontalAlignment="Center"
+                   FontSize="20" FontWeight="Bold" Margin="0 30 0 0"/>
+
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" TextWrapping="WrapWithOverflow" MaxWidth="400"
+                   Text="Welcome to Workout Tracker 2. This is a placeholder where I will eventually place instructions for use and things to know.
+                   Some important information: WPL = Weight per limb. BW = Bodyweight"/>
 
     </Grid>
 </UserControl>
