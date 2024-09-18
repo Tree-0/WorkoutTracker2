@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkoutTracker2.Model
 {
-    internal class Exercise
+    public class Exercise
     {
         public int ExerciseId { get; set; } // primary key
         public int WorkoutId { get; set; } // foreign key
@@ -32,7 +32,9 @@ namespace WorkoutTracker2.Model
             StringBuilder sb = new StringBuilder();
             sb.Append($"{Name} - " +
                 $"\nWeight per Limb: {IsWeightPerLimb}" +
-                $"\nBodyweight: {IsBodyWeight}\n");
+                $"\nBW Exercise: {IsBodyWeight}" +
+                $"\nW x R:" +
+                $"\n");
 
             foreach (var repWeight in SetData)
             {
@@ -40,6 +42,26 @@ namespace WorkoutTracker2.Model
             }
 
             return sb.ToString();
+        }
+
+        public int GetTotalReps()
+        {
+            return SetData.Sum(rw => rw.Reps);
+        }
+
+        public float GetAverageWeight()
+        {
+            if (SetData.Count == 0) return 0f;
+
+            return SetData.Average(rw => rw.Weight);
+
+        }
+
+        public float GetTotalWeight()
+        {
+            if (SetData.Count == 0) return 0f;
+
+            return SetData.Sum(rw => rw.Weight);
         }
 
 

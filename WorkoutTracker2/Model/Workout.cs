@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkoutTracker2.Model
 {
-    internal class Workout
+    public class Workout
     {
         public int WorkoutId { get; set; } // primary key
         public DateTime Date { get; set; }

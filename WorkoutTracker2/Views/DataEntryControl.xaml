@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkoutTracker2"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="700"
+             d:DesignHeight="600" d:DesignWidth="700"
              Background="FloralWhite">
     <Grid x:Name="DataEntryControlGrid">
         <Grid.ColumnDefinitions>
@@ -15,8 +15,8 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*" MaxHeight="250"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Visuals -->
@@ -111,25 +111,14 @@
             <Label HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontWeight="DemiBold"
                    Margin="0 15 0 0" Content="Exercise Name"/>
             <!-- Collection of exercise names -->
-            <ComboBox x:Name="ExerciseNameSelectionBox"
-                  MaxWidth="140" MaxHeight="30" IsEditable="False" Margin="10 0 10 0" Width="140"/>
+            <ComboBox x:Name="ExerciseNameSelectionBox" SelectionChanged="ExerciseNameSelectionBox_SelectionChanged"
+                  MaxWidth="140" MaxHeight="30" IsEditable="False" Margin="10 0 10 10" Width="140"/>
 
-            <DataGrid x:Name="ExerciseDataGrid" MaxWidth="140" ColumnWidth="70"
-                      MaxColumnWidth="70" MaxHeight="150" HorizontalContentAlignment="Center"
-                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
-                      CanUserAddRows="True" CanUserDeleteRows="True" 
-                      Margin="15 10 15 15" Width="140">
-
-                <!-- Bind to Item1 (Reps) -->
-                <DataGridTextColumn x:Name="RepColumn" Header="Reps" Binding="{Binding Reps}" />
-                <!-- Bind to Item2 (Weight) -->
-                <DataGridTextColumn x:Name="WeightColumn" Header="Weight" Binding="{Binding Weight}" />
-            </DataGrid>
             <Button x:Name="NewRowExerciseDataGridButton" Click="NewRowExerciseDataGridButton_Click"
                     Content="New Row" MaxWidth="75" Height="25"/>
 
             <!-- BW and WPL Checkboxes-->
-            <Grid Margin="10 10 10 10">
+            <Grid Margin="10 10 10 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.35*"/>
                     <ColumnDefinition Width="1*"/>
@@ -151,6 +140,20 @@
                 <Label Grid.Row="1" Content="Weight per Limb" VerticalAlignment="Center" Margin="55,0,10,0" Grid.ColumnSpan="2" />
             </Grid>
 
+            <DataGrid x:Name="ExerciseDataGrid" MaxWidth="140" ColumnWidth="70"
+                      MaxColumnWidth="70" MaxHeight="150" HorizontalContentAlignment="Center"
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                      CanUserAddRows="True" CanUserDeleteRows="True" 
+                      Margin="15 0 15 15" Width="140" CurrentCellChanged="ExerciseDataGrid_CurrentCellChanged">
+
+                <!-- Bind to Item2 (Weight) -->
+                <DataGridTextColumn x:Name="WeightColumn" CanUserSort="False" Header="Weight" Binding="{Binding Weight, Mode=TwoWay}" />
+
+                <!-- Bind to Item1 (Reps) -->
+                <DataGridTextColumn x:Name="RepColumn" CanUserSort="False" Header="Reps" Binding="{Binding Reps, Mode=TwoWay}" />
+
+            </DataGrid>
+
         </StackPanel>
 
 
@@ -163,30 +166,59 @@
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                <Button x:Name="AddExerciseButton" Grid.Column="0" Grid.Row="0" Margin="10,40,10,5" 
-                    Click="AddExerciseButton_Click" MaxHeight="50" MaxWidth="80">
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+                <!-- For Manipulating workout data -->
+                <Button x:Name="AddExerciseButton" Grid.Column="0" Grid.Row="0" Margin="10,25,10,5" 
+                    Click="AddExerciseButton_Click" Background="LightCyan" MaxHeight="50" MaxWidth="80">
                     <TextBox TextWrapping="Wrap" Text="Add Exercise" HorizontalContentAlignment="Center"
-                         Background="Transparent" BorderBrush="Transparent" Focusable="False"/>
+                         Background="Transparent" BorderBrush="Transparent" Focusable="False" IsHitTestVisible="False"/>
                 </Button>
-                <Button x:Name="SubmitWorkoutButton" Grid.Column="0" Grid.Row="1" Margin="10,5,10,25"
+                <Button x:Name="SubmitWorkoutButton" Grid.Column="0" Grid.Row="1" Margin="10,5,10,5"
                     Click="SubmitWorkoutButton_Click" Background="LightCyan" MaxHeight="50" MaxWidth="80">
                     <TextBox TextWrapping="Wrap" Text="Submit Workout" HorizontalContentAlignment="Center"
-                         Background="Transparent" BorderBrush="Transparent" Focusable="False"/>
+                         Background="Transparent" BorderBrush="Transparent" Focusable="False" IsHitTestVisible="False"/>
                 </Button>
+                <Button x:Name="ClearWorkoutButton" Grid.Column="0" Grid.Row="1" Margin="10,5,10,5"
+                    Click="ClearWorkoutButton_Click" Background="MistyRose" MaxHeight="50" MaxWidth="80">
+                    <TextBox TextWrapping="Wrap" Text="Clear Workout" HorizontalContentAlignment="Center"
+                         Background="Transparent" BorderBrush="Transparent" Focusable="False" IsHitTestVisible="False"/>
+                </Button>
+                <Button x:Name="DeleteWorkoutButton" Grid.Column="0" Grid.Row="1" Margin="10,5,10,5"
+                        Click="DeleteWorkoutButton_Click" Background="Pink" MaxHeight="50" MaxWidth="80">
+                    <TextBox TextWrapping="Wrap" Text="Delete Workout" HorizontalContentAlignment="Center"
+                             Background="Transparent" BorderBrush="Transparent" Focusable="False" IsHitTestVisible="False"/>
+                </Button>
+
+                <!-- For manipulating BW Data-->
+                <Button x:Name="AddBodyWeightButton" Grid.Column="0" Grid.Row="1" Margin="10 20 10 5"
+                        Click="AddBodyWeightButton_Click">
+                    <TextBox Text="Add BW" Background="Transparent" BorderBrush="Transparent" Focusable="False"/>
+                </Button>
+                <Button x:Name="DeleteBodyWeightButton" Grid.Column="0" Grid.Row="1" Margin="10 5 10 5"
+                        Click="DeleteBodyWeightButton_Click">
+                    <TextBox Text="Delete BW" Background="Transparent" BorderBrush="Transparent" Focusable="False"/>
+                </Button>
+                <TextBox x:Name="BodyWeightTextBox" Margin="10 5 10 10"/>
+
+
             </StackPanel>
 
+            <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                <Label Content="Current Workout"  HorizontalAlignment="Center"
+                       Width="120" HorizontalContentAlignment="Center" Margin="0 15 0 0" FontWeight="DemiBold"/>
+                <ListView x:Name="ExerciseListView" ItemsSource="{Binding ExercisesToAdd}"
+                          SelectedItem="{Binding SelectedExercise, Mode=TwoWay}"
+                          Grid.Column="1" Grid.Row="0" DisplayMemberPath="Name" Height="120" Margin="10 0 10 0"
+                          SelectionChanged="ExerciseListView_SelectionChanged">
+                </ListView>
+            </StackPanel>
 
-            <Label Content="Current Workout" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
-                   Width="120" HorizontalContentAlignment="Center" Margin="0 15 0 0" FontWeight="DemiBold"/>
-            <TextBox x:Name="ExerciseListTextBox" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2"
-                     Margin="10,40,10,0" Height="130" VerticalAlignment="Top"
-                     VerticalScrollBarVisibility="Auto"/>
         </Grid>
 
 

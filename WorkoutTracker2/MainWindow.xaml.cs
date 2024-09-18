@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WorkoutTracker2.Model;
+using System.IO;
 
 namespace WorkoutTracker2
 {
@@ -86,13 +88,49 @@ namespace WorkoutTracker2
         private void Window_Closing(object sender, EventArgs e)
         {
             // save the items in the exercise selection comboBox to a JSON file
-            DataEntryControl.SaveComboBoxItems(DataEntryControl.ExerciseNameCollectionBox, "exerciseComboBox_items");
+            SaveComboBoxItems(DataEntryControl.ExerciseNameCollectionBox, "exerciseComboBox_items");
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // load the items from a JSON file to the exercise selection comboBox
-            DataEntryControl.LoadComboBoxItems(DataEntryControl.ExerciseNameCollectionBox, "exerciseComboBox_items");
-            DataEntryControl.LoadComboBoxItems(DataEntryControl.ExerciseNameSelectionBox, "exerciseComboBox_items");
+            LoadComboBoxItems(DataEntryControl.ExerciseNameCollectionBox, "exerciseComboBox_items");
+            LoadComboBoxItems(DataEntryControl.ExerciseNameSelectionBox, "exerciseComboBox_items");
+            LoadComboBoxItems(GraphingControl.ExerciseToGraphNameSelectionBox, "exerciseComboBox_items");
+        }
+
+
+
+        /// <summary>
+        /// Serialize all the combo box items into a file to use later
+        /// </summary>
+        /// <param name="comboBox"></param>
+        /// <param name="filePath"></param>
+        public void SaveComboBoxItems(ComboBox comboBox, string filePath)
+        {
+            var items = comboBox.Items.Cast<string>().ToList();  // Assuming your items are strings
+            var json = JsonSerializer.Serialize(items);
+            File.WriteAllText(filePath, json);
+        }
+
+
+        /// <summary>
+        /// Deserialize all combo box items from a file on application startup
+        /// </summary>
+        /// <param name="comboBox"></param>
+        /// <param name="filePath"></param>
+        public void LoadComboBoxItems(ComboBox comboBox, string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                var json = File.ReadAllText(filePath);
+                var items = JsonSerializer.Deserialize<List<string>>(json);
+
+                comboBox.Items.Clear();
+                foreach (var item in items)
+                {
+                    comboBox.Items.Add(item);
+                }
+            }
         }
     }
 }

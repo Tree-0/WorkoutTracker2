@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkoutTracker2.ViewModels;
 
-namespace WorkoutTracker2
+namespace WorkoutTracker2.Views.ChartViews
 {
     /// <summary>
-    /// Interaction logic for GraphingControl.xaml
+    /// Interaction logic for ChartView.xaml
     /// </summary>
-    public partial class GraphingControl : UserControl
+    public partial class WeightChartView : UserControl
     {
-        public GraphingControl()
+        public WeightChartView()
         {
             InitializeComponent();
+            
         }
     }
 }

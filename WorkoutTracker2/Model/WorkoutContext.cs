@@ -13,6 +13,7 @@ namespace WorkoutTracker2.Model
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<RepWeight> RepWeights { get; set; }
+        public DbSet<BodyWeight> BodyWeights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

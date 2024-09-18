@@ -11,7 +11,7 @@ namespace WorkoutTracker2.Model
     /// 
     /// Class representing one set of an exercise, with a number of reps, and the weight. 
     /// </summary>
-    internal class RepWeight
+    public class RepWeight
     {
         public int RepWeightId { get; set; } // primary key
         public int ExerciseId { get; set; } // foreign key
